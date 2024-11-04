@@ -1,5 +1,5 @@
 #include <iostream>
-#include <malloc.h>
+#include <string>
 #include <stdlib.h>
 #include <time.h>
 
@@ -14,33 +14,28 @@ class COne
 		float f;
 		char *ps;
 
-		void copy()
-		{
-			//do smth
-		}
-
-		void alloc()
-		{
-			//get string size
-		}
-
 	public:
 		//конструктор по умолчанию
-		COne() : f(1)
-		{
-			int size = (int)f;
-			ps = new char[size];
-		}
+		COne() : f(1), ps(nullptr) {}
 
 		//Консруктор с заданными параматрами
-		COne(float a) : f(a)
+		COne(float a, char str[1024]) : f(a), ps(str)
 		{
-			int size = (int)f;
-			ps = new char [size];
+			ps = new char[strlen(str) + 1];
+			strcpy(ps, str);
 		}
 
 		//Конструктор копирования
-		COne(const COne& other) : f(other.f), ps(other.ps) {}
+		COne(const COne& other) : f(other.f), ps(other.ps)
+		{
+			if (other.ps) {
+				ps = new char[strlen(other.ps) + 1];
+				strcpy(ps, other.ps);
+			}
+			else {
+				ps = nullptr;
+			}
+		}
 
 		//Оператор присваивания
 		COne& operator=(const COne& other)
@@ -60,13 +55,23 @@ class COne
 
 		void input()
 		{
-			cin >> ps;
+			cout << "Input float number: ";
+			cin >> f;
+
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+			char buffer[1024];
+			cout << "\nInput string: ";
+			cin.getline(buffer, 1024);
+
+			ps = new char[strlen(buffer) + 1];
+			strcpy(ps, buffer);
 		}
 
 		void output()
 		{
-			cout << "\n" << f << endl;
-			cout << "\n" << ps << endl;
+			cout << "\nf: " << f << endl;
+			cout << "\n*ps: " << ps << endl;
 		}
 
 		float get_f()
@@ -95,10 +100,10 @@ class CTwo
 
 	public:
 		//конструктор по умолчанию
-		CTwo() : s("0"), obj(0) {}
+		CTwo() : s(""), obj() {}
 
 		//Консруктор с заданными параматрами
-		CTwo(string str, COne exmpl) : s(str), obj(exmpl) {}
+		CTwo(const string &str, const COne &exmpl) : s(str), obj(exmpl) {}
 
 		//Конструктор копирования
 		CTwo(const CTwo& other) : s(other.s), obj(other.obj) {}
@@ -119,13 +124,17 @@ class CTwo
 
 		void input()
 		{
-			cin >> s;
+			cout << "\ninput string: ";
+			getline(cin, s);
 		}
 
 		void output()
 		{
-			cout << "\n" << s << endl;
+			cout << "\nCTwo string: " << s << "\nCOne object: (" << endl;
+			
 			obj.output();
+
+			cout << "\n);" << endl;
 		}
 
 		string get_s()
@@ -144,18 +153,17 @@ class CTwo
 
 int main()
 {
-	COne test1(4);
+	COne t1;
 
-	cout << "\n\nCOne class: \n" << endl;
+	t1.input();
 
-	test1.input();
-	test1.output();
+	t1.output();
 
-	CTwo test2("CTwo", test1);
+	CTwo t2("ctwo", t1);
 
-	cout << "\n\nCTwo class: \n" << endl;
-	
-	test2.output();
+	t2.input();
+
+	t2.output();
 
 	return 0;
 }
