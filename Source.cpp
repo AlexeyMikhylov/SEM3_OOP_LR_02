@@ -124,13 +124,13 @@ class CTwo
 			return *this;
 		}
 
-		void input()
+		void inputc2()
 		{
 			cout << "\ninput string: ";
 			getline(cin, s);
 		}
 
-		void output()
+		void outputc2()
 		{
 			cout << "\nCTwo string: " << s << "\nCOne object: (" << endl;
 			
@@ -153,6 +153,55 @@ class CTwo
 		~CTwo() {}
 };
 
+class CThree : public CTwo
+{
+	private:
+
+		int number;
+
+	public:
+		//по умолчанию
+		CThree() : CTwo(), number(0) {}
+
+		//с параметрами
+		CThree(const string s, const COne &obj, int num) : number(num) {}
+
+		//копирования
+		CThree(const CThree& other) : CTwo(other), number(other.number) {}
+
+		//оператор присваивания
+		CThree& operator=(const CThree& other)
+		{
+			if (this == &other)
+			{
+				return *this;
+			}
+
+			number = other.number;
+
+			return *this;
+		}
+
+		void inputc3()
+		{
+			inputc2();
+			cout << "\nEnter number: ";
+			cin >> number;
+			cout << endl;
+		}
+
+		void outputc3()
+		{
+			outputc2();
+			cout << "\n number: " << number << endl;	
+		}
+
+		int get_number()
+		{
+			return number;
+		}
+};
+
 int main()
 {
 	COne t1;
@@ -163,9 +212,15 @@ int main()
 
 	CTwo t2("ctwo", t1);
 
-	t2.input();
+	t2.inputc2();
 
-	t2.output();
+	t2.outputc2();
+
+	CThree t3;
+
+	t3.inputc3();
+
+	t3.outputc3();
 
 	return 0;
 }
