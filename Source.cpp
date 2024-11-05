@@ -28,11 +28,13 @@ class COne
 		//Конструктор копирования
 		COne(const COne& other) : f(other.f), ps(other.ps)
 		{
-			if (other.ps) {
+			if (other.ps)
+			{
 				ps = new char[strlen(other.ps) + 1];
 				strcpy(ps, other.ps);
 			}
-			else {
+			else
+			{
 				ps = nullptr;
 			}
 		}
