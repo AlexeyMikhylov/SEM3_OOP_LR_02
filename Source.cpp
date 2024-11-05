@@ -192,7 +192,7 @@ class CThree : public CTwo
 
 		void outputc3()
 		{
-			outputc2();
+			outputc2(); //
 			cout << "\n number: " << number << endl;	
 		}
 
@@ -210,15 +210,17 @@ int main()
 
 	t1.output();
 
+
 	CTwo t2("ctwo", t1);
 
 	t2.inputc2();
 
 	t2.outputc2();
 
+
 	CThree t3;
 
-	t3.inputc3();
+	//t3.inputc3();
 
 	t3.outputc3();
 
