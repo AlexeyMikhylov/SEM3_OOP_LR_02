@@ -220,7 +220,7 @@ int main()
 	t2.outputc2();
 
 
-	CThree t3;
+	CThree t3();
 
 	//t3.inputc3();
 
