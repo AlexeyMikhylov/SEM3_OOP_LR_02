@@ -18,7 +18,7 @@ class COne
 		//конструктор по умолчанию
 		COne() : f(1), ps(nullptr) {}
 
-		//Консруктор с заданными параматрами
+		//Конструктор с заданными параматрами
 		COne(float a, char str[1024]) : f(a), ps(str)
 		{
 			ps = new char[strlen(str) + 1];
@@ -164,7 +164,7 @@ class CThree : public CTwo
 		CThree() : CTwo(), number(0) {}
 
 		//с параметрами
-		CThree(const string s, const COne &obj, int num) : number(num) {}
+		CThree(const string s, const COne &obj, int num) : CTwo(s, obj), number(num) {}
 
 		//копирования
 		CThree(const CThree& other) : CTwo(other), number(other.number) {}
@@ -184,15 +184,17 @@ class CThree : public CTwo
 
 		void inputc3()
 		{
-			inputc2();
+			//CTwo :: inputc2();
+
 			cout << "\nEnter number: ";
 			cin >> number;
+
 			cout << endl;
 		}
 
 		void outputc3()
 		{
-			outputc2(); //
+			CTwo :: outputc2(); //ошибка
 			cout << "\n number: " << number << endl;	
 		}
 
@@ -204,7 +206,7 @@ class CThree : public CTwo
 
 int main()
 {
-	COne t1;
+	COne t1; //конструктор по умолчанию (t1 принимает значения по умолачнию)
 
 	t1.input();
 
@@ -222,7 +224,7 @@ int main()
 
 	//t3.inputc3();
 
-	t3.outputc3();
+	t3.outputc3(); //
 
 	return 0;
 }
